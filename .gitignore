@@ -1,7 +1,9 @@
 #import only these files
 **/*
 !**/*.c
+!**/*.cpp
 !**/*.sh
 !**/.gitignore
 !**/Makefile
+!**/makefile
 !**/
