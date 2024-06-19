@@ -1,5 +1,6 @@
 #import only these files
 **/*
+!**/*.txt
 !**/*.c
 !**/*.cpp
 !**/*.sh
