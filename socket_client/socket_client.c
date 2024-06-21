@@ -1,4 +1,8 @@
 // Client side C/C++ program to demonstrate Socket
+//sockets are used for network communication between programs on different devices.
+//They provide a way to establish connections and exchange data over a network using protocols like TCP/IP
+//Stream sockets (TCP):  +ordered +reliable -slow #like a phone call
+//Datagram sockets (UDP): +fast -not order - not reliable #like sending a post card
 // programming
 #include <arpa/inet.h>
 #include <stdio.h>

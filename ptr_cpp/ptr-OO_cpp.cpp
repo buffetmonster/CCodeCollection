@@ -1,6 +1,11 @@
 #include <iostream>
 #include <cstring>
 
+typedef struct {
+  int id;
+  char name[64];
+} Person;
+
 void Ternary_operator (int a, int b)
 {
     int max = (a > b)? a : b;
@@ -32,13 +37,45 @@ private:
 
 class StringManipulator {
 public:
+  void StringStd(void) {
+    std::string full_name;//Empty string
+    std::string planet {"Earth. Where the sky is blue"};//Initialize with string literal
+	  std::string prefered_planet{planet};//Initialize with other existing string
+    std::string message {"Hello there",5};	//Initialize with part of a string literal.
+		//Contains hello
+    std::string weird_message(4,'e');//Initialize with multiple copies of a char
+		// contains eeee
+    std::string greeting{"Hello World"};
+    std::string saying_hello{ greeting,6,5};//Initialize with part of an existing std::string
+
+    std::cout << "full_name : " << full_name << std::endl;
+	  std::cout << "planet : " << planet << std::endl;
+	  std::cout << "prefered_planet : " << prefered_planet << std::endl;
+	  std::cout << "message : " << message << std::endl;
+	  std::cout << "weird_message : " << weird_message << std::endl;
+	  std::cout << "greeting : " << greeting << std::endl;
+	  std::cout << "saying_hello : " << saying_hello << std::endl;
+
+    //Changing std::string at runtime, automatically free and reallocated
+    planet = "Earth. Where the sky is blue Earth. Where the sky is blue Earth. Where ";
+    std::cout << "planet : " << planet << std::endl;
+  }
   // Function to find the maximum of two integers using a ternary operator within the class
   void CString(void) {
     // c-string, bad as need to null terminate: use string literal
     char messagec [] {'H','e','l','l','o','\0'};
+    std::cout << "\nCString!" << std::endl;
     messagec [3] ='L'; //We can change it
     std::cout << "messagec : " << messagec << std::endl;
     std::cout << "sizeof(messagec) : " << sizeof(messagec) << std::endl;
+    std::cout << "\nconvert to upper!" << std::endl;
+    for ( char c : messagec){
+      //the conversion does something weird so need to cast else we get it's ASCII code. Or do in 2 steps as per comment below.
+      std::cout << "changed to upperx  : " << (char)toupper(c) << std::endl;
+      //std::cout << "changed to upperx  : " << (int)toupper(c) << std::endl;
+      //char thechar = toupper(c);
+      //std::cout << "changed to upper  : " << thechar << std::endl;
+    }
   }
   void PtrString(void) {
 
@@ -141,6 +178,44 @@ private:
   int *VariablePtr {};
 };
 
+class StringStdClass {
+public:
+  //Constuctors
+  StringStdClass() = default; //we set a default constructor, not required but done anyway. Good practice if want to add more non default constructors
+  void StringStd(void) {
+    planet = std::string{"Earth. Where the sky is blue"};//Initialize with string literal
+	  prefered_planet = std::string{planet};//Initialize with other existing string
+    message = std::string{"Hello there",5};	//Initialize with part of a string literal.
+		//Contains hello
+    //std::string weird_message;
+    weird_message=std::string(4,'e');//Initialize with multiple copies of a char
+		// contains eeee
+    greeting = std::string{"Hello World"};
+    saying_hello = std::string{ greeting,6,5};//Initialize with part of an existing std::string
+  }
+  void StringStdPrt(void) {
+    std::cout << "full_name : " << full_name << std::endl;
+	  std::cout << "planet : " << planet << std::endl;
+	  std::cout << "prefered_planet : " << prefered_planet << std::endl;
+	  std::cout << "message : " << message << std::endl;
+	  std::cout << "weird_message : " << weird_message << std::endl;
+	  std::cout << "greeting : " << greeting << std::endl;
+	  std::cout << "saying_hello : " << saying_hello << std::endl;
+
+    //Changing std::string at runtime, automatically free and reallocate
+    planet = "Earth. Where the sky is blue Earth. Where the sky is blue Earth. Where ";
+    std::cout << "planet : " << planet << std::endl;
+  }
+private:
+  std::string full_name;//Empty string
+  std::string planet;
+  std::string prefered_planet;
+  std::string message;
+  std::string weird_message;
+  std::string greeting;
+  std::string saying_hello;
+};
+
 int main() {
     //bonus 
     int First {13};
@@ -148,6 +223,7 @@ int main() {
     Ternary_operator(First, Second);
     //Same but OO
     ValueComparator comparator; // Create an object of ValueComparator
+    StringStdClass StringStd;
     comparator.findMax(First,Second); 
     comparator.printResult(First,Second);
     comparator.printResultX();
@@ -167,5 +243,28 @@ int main() {
     stringex.Delete();
     //stringex.ExhaustMemory();
     stringex.ExhaustMemoryNoThrow();
+    StringStd.StringStd();
+    StringStd.StringStdPrt();
+
+    Person *pPerson = (Person*) malloc(sizeof(Person));
+    if (NULL == pPerson){
+      puts("malloc failure");
+      return -1;
+    }
+    // Fill the allocated memory with example data
+    //typedef struct {
+    //  int id;
+    //  char name[64];
+    //} Person;
+    pPerson->id = 12345; // Set the ID
+    strncpy(pPerson->name, "John Doe", sizeof(pPerson->name) - 1);
+    pPerson->name[sizeof(pPerson->name) - 1] = '\0'; // Ensure null termination
+  
+    // Print the example data
+    printf("Person Info:\n");
+    printf("ID: %d\n", pPerson->id);
+    printf("Name: %s\n", pPerson->name);
+    free(pPerson);
     return 0;
 }
+
