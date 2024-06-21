@@ -1,5 +1,6 @@
-#import only these files
+# Ignore everything except...
 **/*
+# Allow specific file types
 !**/*.txt
 !**/*.c
 !**/*.cpp
@@ -7,4 +8,7 @@
 !**/.gitignore
 !**/Makefile
 !**/makefile
+# Ignore any empty directories
 !**/
+# Exclude build directory
+build/
