@@ -1,6 +1,38 @@
 #include <iostream>
 #include <cmath>
 
+void FixedPointConversion(int invar){
+    //fixed-point arithmetic to avoid using float
+    int invarFPN = invar*100; // Assume two decimal places
+    int divisor = 224; 
+    int voltage_fixed = invarFPN / divisor;
+
+    int voltage_int = voltage_fixed / 100;
+    int voltage_decimal = voltage_fixed % 100;
+
+    printf("invar: %d Voltage: %d.%02d volts\n", invar, voltage_int, voltage_decimal);
+}
+
+// Function to lookup voltage based on myvar
+
+void voltage_lookup(int myvar) {
+  const int lookup_table[][2] = {
+      {2000, 870},
+      {2010, 880},
+      {2020, 890},
+      {2022, 900}
+      // Add more entries to the lookup table as needed
+  };
+
+  for (int i = 0; i < (int)(sizeof(lookup_table) / sizeof(lookup_table[0])); ++i) {
+    if (lookup_table[i][0] == myvar) {
+      //return (float)lookup_table[i][1] / 100;
+      printf("Voltage: %.2f volts\n", (float)lookup_table[i][1] / 100); 
+    }
+  }
+
+  //return -1;
+}
 int main() {
     // Integer arithmetic
     int A = 10;
@@ -46,5 +78,11 @@ int main() {
     std::cout << "Sine of " << Angle << " degrees: " << SineValue << std::endl;
     std::cout << "Cosine of " << Angle << " degrees: " << CosineValue << std::endl;
 
+    FixedPointConversion(2022);
+    FixedPointConversion(2019);
+    FixedPointConversion(2016);
+
+    voltage_lookup(2022);
+    voltage_lookup(2000);
     return 0;
 }
